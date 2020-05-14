@@ -19,4 +19,5 @@ while(1):
     if(user_answer =="exit"):
         break
     qr.check_solution(correct_answer, possible_answers[options[user_answer]])
+    print("\n")
     
