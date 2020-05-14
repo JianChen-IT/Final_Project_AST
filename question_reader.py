@@ -17,7 +17,7 @@ def read_json(my_json):
     choice = random.randint(0, len(data["results"]))
     output_scaped = html.unescape(data["results"][choice]["question"])
 
-    correct_answer = data["results"][choice]["correct_answer"]
+    correct_answer = html.unescape(data["results"][choice]["correct_answer"])
 
     possible_answers = data["results"][choice]["incorrect_answers"]
     possible_answers.append(correct_answer)
