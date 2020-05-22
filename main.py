@@ -6,10 +6,12 @@ import question_reader as qr
 import time 
 import os
 import signal
-
-TIMEOUT = 60
+import ASR
+import sys
+TIMEOUT = 120
 total_points = 0
-
+correct_answers = 0
+total_questions = 0
 def interrupted (signum, frame):
     print ("\nTIME OUT!")
     #signal.signal(signal.SIGALRM, interrupted)
@@ -25,17 +27,25 @@ signal.signal(signal.SIGALRM, interrupted)
 
 while(1):
     filename = qr.pick_category()
+    #print("SCORE: " + str(total_points))
     correct_answer,possible_answers = qr.read_json(filename)
     options = {}
     available_options = ["a","b","c","d"]
     for i in range(len(available_options)):
         options[available_options[i]]=i
     #qr.speak("Pick and answer");
-    print("Pick and answer: ", end="")
-
-    user_answer = user_input()
+    user_answer=ASR.asr()
+    while(user_answer!="a" and user_answer!="b" and user_answer!="c" and user_answer!="d" and user_answer!="exit"):
+        print("\n")
+        print("Your answer is not valid! Try Again!")
+        sys.stdout.write("Pick an answer: ")
+        sys.stdout.flush()
+        user_answer=ASR.asr()
+    print(user_answer)
+    #user_answer = user_input()
     if(user_answer =="exit"):
+        print("YOUR FINAL SCORE IS: " + str(total_points) + " " + str(correct_answers) + "/" + str(total_questions))
         break
-    qr.check_solution(correct_answer, possible_answers[options[user_answer]], total_points)
+    total_points, correct_answers, total_questions=qr.check_solution(correct_answer, possible_answers[options[user_answer]], total_points, correct_answers, total_questions)
     print("\n")
     

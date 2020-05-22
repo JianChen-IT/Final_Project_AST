@@ -5,6 +5,7 @@ import html
 from gtts import gTTS
 import playsound
 import glob
+import sys
 import ffmpy
 from pydub import AudioSegment
 os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/Database/")
@@ -22,7 +23,6 @@ def read_json(my_json):
     data = json.load(json_file)
     choice = random.randint(0, len(data["results"]))
     output_scaped = html.unescape(data["results"][choice]["question"])
-    
     correct_answer = html.unescape(data["results"][choice]["correct_answer"])
 
     possible_answers = data["results"][choice]["incorrect_answers"]
@@ -36,18 +36,20 @@ def read_json(my_json):
     for i in range(len(possible_answers)):
             print("\t"+options[i] + "." + " " + possible_answers[i] + "\t")
             speak(options[i] + "." + " " + possible_answers[i])
-    
+    sys.stdout.write("Pick an answer: ")
+    sys.stdout.flush()
     json_file.close()
     return correct_answer,possible_answers
 
-def check_solution(correct_answer, given_answer, total_points):
+def check_solution(correct_answer, given_answer, total_points, total_answers, total_questions):
     if correct_answer == given_answer:
         print("Correct!")
-        print("")
-        return (total_points + 100)
+        print("TOTAL SCORE: " + str(total_points + 100) + " " + str(total_answers + 1) + "/" + str(total_questions + 1))
+        return (total_points + 100), (total_answers + 1), (total_questions + 1)
     else:
         print("Incorrect! The correct answer is: " + correct_answer)
-        return (total_points - 20)
+        print("TOTAL SCORE: " + str(total_points - 20) + " " + str(total_answers) + "/" + str(total_questions + 1))
+        return (total_points - 20), (total_answers), (total_questions + 1)
 
 
 def speed_change(sound, speed=1.0):
