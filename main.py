@@ -1,8 +1,9 @@
 '''
 Group Members: Irene Cantero Bandera (207525), Joan Garcia Marty (205331), Jian Chen (206064)
 Final Project - Advanced Speech Technologies
-TITLE:  
 
+TITLE: Trivial
+Date: 26/05/2020
 '''
 
 import question_reader as qr
