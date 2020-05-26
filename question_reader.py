@@ -8,14 +8,14 @@ import glob
 import sys
 import ffmpy
 from pydub import AudioSegment
+
+
 os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/Database/")
+
 def pick_category():
-    #categories_file = os.path.dirname(os.path.abspath(__file__)) + "/Database/"
     all_categories = glob.glob("*.json")
-    #print(all_categories)
+
     filename = random.choice(all_categories)
-    #print(filename)
-    #print(all_categories)
     return filename
 
 def read_json(my_json):
