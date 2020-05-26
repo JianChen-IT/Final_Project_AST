@@ -1,4 +1,4 @@
-from pocketsphinx import AudioFile, get_model_path, get_data_path
+from pocketsphinx import get_model_path
 from pocketsphinx import LiveSpeech
 import os
 
